@@ -11,44 +11,53 @@ namespace ReleaseManagementAssignment
 {
 
 
-    public partial class AddProject
+    public partial class AddEmployee1
     {
 
         /// <summary>
-        /// ProjectIdLabel control.
+        /// EmpIdLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ProjectIdLabel;
+        protected global::System.Web.UI.WebControls.Label EmpIdLabel;
 
         /// <summary>
-        /// ProIDBox control.
+        /// EmpIDBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProIDBox;
+        protected global::System.Web.UI.WebControls.TextBox EmpIDBox;
 
         /// <summary>
-        /// ProjectNameLabel control.
+        /// EmpNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ProjectNameLabel;
+        protected global::System.Web.UI.WebControls.Label EmpNameLabel;
 
         /// <summary>
-        /// ProjNameBox control.
+        /// EmpNameBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProjNameBox;
+        protected global::System.Web.UI.WebControls.TextBox EmpNameBox;
+
+        /// <summary>
+        /// DropDownList1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
 
         /// <summary>
         /// AddButton control.
@@ -67,14 +76,5 @@ namespace ReleaseManagementAssignment
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label MessageLabel;
-
-        /// <summary>
-        /// HomeButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button HomeButton;
     }
 }

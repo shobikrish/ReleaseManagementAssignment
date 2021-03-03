@@ -75,26 +75,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddEmployee.aspx" />
     <Content Include="AddProject.aspx" />
     <Content Include="AssignProjectTeamLeads.aspx" />
     <Content Include="Global.asax" />
     <Content Include="LoginPage.aspx" />
     <Content Include="ManagerRole.aspx" />
-    <Content Include="releasemodel.Context.tt">
+    <Content Include="ReleaseDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>releasemodel.edmx</DependentUpon>
-      <LastGenOutput>releasemodel.Context.cs</LastGenOutput>
+      <DependentUpon>ReleaseDb.edmx</DependentUpon>
+      <LastGenOutput>ReleaseDb.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="releasemodel.tt">
+    <Content Include="ReleaseDb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>releasemodel.edmx</DependentUpon>
-      <LastGenOutput>releasemodel.cs</LastGenOutput>
+      <DependentUpon>ReleaseDb.edmx</DependentUpon>
+      <LastGenOutput>ReleaseDb.cs</LastGenOutput>
     </Content>
     <Content Include="ViewAllProjects.aspx" />
     <Content Include="ViewTeamLeads.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddEmployee.aspx.cs">
+      <DependentUpon>AddEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddEmployee.aspx.designer.cs">
+      <DependentUpon>AddEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddEmployee.cs">
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="AddProject.aspx.cs">
       <DependentUpon>AddProject.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -110,10 +121,10 @@
       <DependentUpon>AssignProjectTeamLeads.aspx</DependentUpon>
     </Compile>
     <Compile Include="EmployeeList.cs">
-      <DependentUpon>releasemodel.tt</DependentUpon>
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
     </Compile>
     <Compile Include="EmpTeam.cs">
-      <DependentUpon>releasemodel.tt</DependentUpon>
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -140,29 +151,32 @@
       <DependentUpon>ManagerRole.aspx</DependentUpon>
     </Compile>
     <Compile Include="proc_CheckLogin_Result.cs">
-      <DependentUpon>releasemodel.tt</DependentUpon>
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Project.cs">
-      <DependentUpon>releasemodel.tt</DependentUpon>
+    <Compile Include="Project1.cs">
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectList.cs">
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="releasemodel.Context.cs">
+    <Compile Include="ReleaseDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>releasemodel.Context.tt</DependentUpon>
+      <DependentUpon>ReleaseDb.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="releasemodel.cs">
+    <Compile Include="ReleaseDb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>releasemodel.tt</DependentUpon>
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="releasemodel.Designer.cs">
+    <Compile Include="ReleaseDb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>releasemodel.edmx</DependentUpon>
+      <DependentUpon>ReleaseDb.edmx</DependentUpon>
     </Compile>
     <Compile Include="Team.cs">
-      <DependentUpon>releasemodel.tt</DependentUpon>
+      <DependentUpon>ReleaseDb.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewAllProjects.aspx.cs">
       <DependentUpon>ViewAllProjects.aspx</DependentUpon>
@@ -182,12 +196,12 @@
   <ItemGroup>
     <Content Include="Manager.Master" />
     <None Include="packages.config" />
-    <EntityDeploy Include="releasemodel.edmx">
+    <EntityDeploy Include="ReleaseDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>releasemodel.Designer.cs</LastGenOutput>
+      <LastGenOutput>ReleaseDb.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="releasemodel.edmx.diagram">
-      <DependentUpon>releasemodel.edmx</DependentUpon>
+    <Content Include="ReleaseDb.edmx.diagram">
+      <DependentUpon>ReleaseDb.edmx</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

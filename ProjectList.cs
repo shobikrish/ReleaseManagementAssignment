@@ -12,12 +12,14 @@ namespace ReleaseManagementAssignment
     using System;
     using System.Collections.Generic;
     
-    public partial class Project
+    public partial class ProjectList
     {
-        public int Pid { get; set; }
+        public int Sno { get; set; }
+        public Nullable<int> Pid { get; set; }
         public string Pname { get; set; }
         public Nullable<int> ProjManagerId { get; set; }
     
         public virtual EmployeeList EmployeeList { get; set; }
+        public virtual Project1 Project { get; set; }
     }
 }

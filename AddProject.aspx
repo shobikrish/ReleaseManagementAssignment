@@ -21,10 +21,11 @@
 
                     </td>
                 </tr>
-
-
     </table>
-    <asp:Button ID="AddButton" runat="server" Text="Add Project" OnClick="AddButton_Click" />
-
-
+   <br />
+    <asp:Button ID="AddButton" runat="server" Text="Add Projects" OnClick="AddButton_Click1" />
+    <br />
+    <asp:Label ID="MessageLabel" runat="server" Text=""></asp:Label>
+    <br />
+    <asp:Button ID="HomeButton" runat="server" Text="Home" OnClick="HomeButton_Click" />
 </asp:Content>

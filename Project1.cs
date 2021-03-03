@@ -12,25 +12,17 @@ namespace ReleaseManagementAssignment
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeeList
+    public partial class Project1
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EmployeeList()
+        public Project1()
         {
-            this.EmpTeams = new HashSet<EmpTeam>();
-            this.Teams = new HashSet<Team>();
             this.ProjectLists = new HashSet<ProjectList>();
         }
     
-        public int EmployeeId { get; set; }
-        public string EmployeeName { get; set; }
-        public string EmployeeRole { get; set; }
-        public string Paassword { get; set; }
+        public int ProId { get; set; }
+        public string ProName { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmpTeam> EmpTeams { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Team> Teams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectList> ProjectLists { get; set; }
     }

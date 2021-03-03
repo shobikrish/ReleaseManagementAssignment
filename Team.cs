@@ -22,6 +22,7 @@ namespace ReleaseManagementAssignment
     
         public int TeamId { get; set; }
         public int TeamLeadId { get; set; }
+        public string LeadName { get; set; }
     
         public virtual EmployeeList EmployeeList { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

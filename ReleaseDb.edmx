@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="releasedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AddEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" />
+          <Property Name="EmpRole" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="EmployeeList">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -22,12 +30,20 @@
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Projects">
+        <EntityType Name="Project">
           <Key>
-            <PropertyRef Name="Pid" />
+            <PropertyRef Name="ProId" />
           </Key>
-          <Property Name="Pid" Type="int" Nullable="false" />
-          <Property Name="Pname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProId" Type="int" Nullable="false" />
+          <Property Name="ProName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ProjectList">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pid" Type="int" />
+          <Property Name="Pname" Type="varchar" MaxLength="50" />
           <Property Name="ProjManagerId" Type="int" />
         </EntityType>
         <EntityType Name="Teams">
@@ -36,7 +52,32 @@
           </Key>
           <Property Name="TeamId" Type="int" Nullable="false" />
           <Property Name="TeamLeadId" Type="int" Nullable="false" />
+          <Property Name="LeadName" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK__ProjectLi__ProjM__4F7CD00D">
+          <End Role="EmployeeList" Type="Self.EmployeeList" Multiplicity="0..1" />
+          <End Role="ProjectList" Type="Self.ProjectList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeList">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="ProjectList">
+              <PropertyRef Name="ProjManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProjectList__Pid__4E88ABD4">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="ProjectList" Type="Self.ProjectList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProId" />
+            </Principal>
+            <Dependent Role="ProjectList">
+              <PropertyRef Name="Pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmpTeam_EmployeeList">
           <End Role="EmployeeList" Type="Self.EmployeeList" Multiplicity="1" />
           <End Role="EmpTeam" Type="Self.EmpTeam" Multiplicity="*" />
@@ -61,18 +102,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Projects_EmployeeList">
-          <End Role="EmployeeList" Type="Self.EmployeeList" Multiplicity="0..1" />
-          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeList">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Projects">
-              <PropertyRef Name="ProjManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Teams_EmployeeList">
           <End Role="EmployeeList" Type="Self.EmployeeList" Multiplicity="1" />
           <End Role="Teams" Type="Self.Teams" Multiplicity="*" />
@@ -89,15 +118,35 @@
           <Parameter Name="un" Type="int" Mode="In" />
           <Parameter Name="pass" Type="varchar(max)" Mode="In" />
         </Function>
+        <Function Name="S_AddEmployee_p" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Eid" Type="int" Mode="In" />
+          <Parameter Name="Ename" Type="varchar" Mode="In" />
+          <Parameter Name="Erole" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="S_AddTeamLeadtoProject_p" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Pid" Type="int" Mode="In" />
+          <Parameter Name="Pname" Type="varchar" Mode="In" />
+          <Parameter Name="leadid" Type="int" Mode="In" />
+        </Function>
         <Function Name="S_InsertIntoProject_p" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Pid" Type="int" Mode="In" />
           <Parameter Name="Pname" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="releasedbModelStoreContainer">
+          <EntitySet Name="AddEmployee" EntityType="Self.AddEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeList" EntityType="Self.EmployeeList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpTeam" EntityType="Self.EmpTeam" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectList" EntityType="Self.ProjectList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ProjectLi__ProjM__4F7CD00D" Association="Self.FK__ProjectLi__ProjM__4F7CD00D">
+            <End Role="EmployeeList" EntitySet="EmployeeList" />
+            <End Role="ProjectList" EntitySet="ProjectList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProjectList__Pid__4E88ABD4" Association="Self.FK__ProjectList__Pid__4E88ABD4">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectList" EntitySet="ProjectList" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmpTeam_EmployeeList" Association="Self.FK_EmpTeam_EmployeeList">
             <End Role="EmployeeList" EntitySet="EmployeeList" />
             <End Role="EmpTeam" EntitySet="EmpTeam" />
@@ -105,10 +154,6 @@
           <AssociationSet Name="FK_EmpTeam_Teams" Association="Self.FK_EmpTeam_Teams">
             <End Role="Teams" EntitySet="Teams" />
             <End Role="EmpTeam" EntitySet="EmpTeam" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Projects_EmployeeList" Association="Self.FK_Projects_EmployeeList">
-            <End Role="EmployeeList" EntitySet="EmployeeList" />
-            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_Teams_EmployeeList" Association="Self.FK_Teams_EmployeeList">
             <End Role="EmployeeList" EntitySet="EmployeeList" />
@@ -128,8 +173,8 @@
           <Property Name="EmployeeRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Paassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="EmpTeams" Relationship="Self.FK_EmpTeam_EmployeeList" FromRole="EmployeeList" ToRole="EmpTeam" />
-          <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_EmployeeList" FromRole="EmployeeList" ToRole="Projects" />
           <NavigationProperty Name="Teams" Relationship="Self.FK_Teams_EmployeeList" FromRole="EmployeeList" ToRole="Teams" />
+          <NavigationProperty Name="ProjectLists" Relationship="releasedbModel.FK__ProjectLi__ProjM__4F7CD00D" FromRole="EmployeeList" ToRole="ProjectList" />
         </EntityType>
         <EntityType Name="EmpTeam">
           <Key>
@@ -141,15 +186,6 @@
           <NavigationProperty Name="EmployeeList" Relationship="Self.FK_EmpTeam_EmployeeList" FromRole="EmpTeam" ToRole="EmployeeList" />
           <NavigationProperty Name="Team" Relationship="Self.FK_EmpTeam_Teams" FromRole="EmpTeam" ToRole="Teams" />
         </EntityType>
-        <EntityType Name="Project">
-          <Key>
-            <PropertyRef Name="Pid" />
-          </Key>
-          <Property Name="Pid" Type="Int32" Nullable="false" />
-          <Property Name="Pname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ProjManagerId" Type="Int32" />
-          <NavigationProperty Name="EmployeeList" Relationship="Self.FK_Projects_EmployeeList" FromRole="Projects" ToRole="EmployeeList" />
-        </EntityType>
         <EntityType Name="Team">
           <Key>
             <PropertyRef Name="TeamId" />
@@ -158,6 +194,7 @@
           <Property Name="TeamLeadId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="EmployeeList" Relationship="Self.FK_Teams_EmployeeList" FromRole="Teams" ToRole="EmployeeList" />
           <NavigationProperty Name="EmpTeams" Relationship="Self.FK_EmpTeam_Teams" FromRole="Teams" ToRole="EmpTeam" />
+          <Property Name="LeadName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_EmpTeam_EmployeeList">
           <End Role="EmployeeList" Type="Self.EmployeeList" Multiplicity="1" />
@@ -168,18 +205,6 @@
             </Principal>
             <Dependent Role="EmpTeam">
               <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Projects_EmployeeList">
-          <End Role="EmployeeList" Type="Self.EmployeeList" Multiplicity="0..1" />
-          <End Role="Projects" Type="Self.Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeList">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Projects">
-              <PropertyRef Name="ProjManagerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -207,18 +232,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="releasedbEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="releasedbEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="EmployeeLists" EntityType="Self.EmployeeList" />
           <EntitySet Name="EmpTeams" EntityType="Self.EmpTeam" />
-          <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="Teams" EntityType="Self.Team" />
           <AssociationSet Name="FK_EmpTeam_EmployeeList" Association="Self.FK_EmpTeam_EmployeeList">
             <End Role="EmployeeList" EntitySet="EmployeeLists" />
             <End Role="EmpTeam" EntitySet="EmpTeams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Projects_EmployeeList" Association="Self.FK_Projects_EmployeeList">
-            <End Role="EmployeeList" EntitySet="EmployeeLists" />
-            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_Teams_EmployeeList" Association="Self.FK_Teams_EmployeeList">
             <End Role="EmployeeList" EntitySet="EmployeeLists" />
@@ -236,17 +256,89 @@
             <Parameter Name="Pid" Mode="In" Type="Int32" />
             <Parameter Name="Pname" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Project1" EntityType="releasedbModel.Project1" />
+          <FunctionImport Name="S_AddTeamLeadtoProject_p">
+            <Parameter Name="Pid" Mode="In" Type="Int32" />
+            <Parameter Name="Pname" Mode="In" Type="String" />
+            <Parameter Name="leadid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="ProjectLists" EntityType="releasedbModel.ProjectList" />
+          <AssociationSet Name="FK__ProjectLi__ProjM__4F7CD00D" Association="releasedbModel.FK__ProjectLi__ProjM__4F7CD00D">
+            <End Role="EmployeeList" EntitySet="EmployeeLists" />
+            <End Role="ProjectList" EntitySet="ProjectLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProjectList__Pid__4E88ABD4" Association="releasedbModel.FK__ProjectList__Pid__4E88ABD4">
+            <End Role="Project1" EntitySet="Project1" />
+            <End Role="ProjectList" EntitySet="ProjectLists" />
+          </AssociationSet>
+          <EntitySet Name="AddEmployees" EntityType="releasedbModel.AddEmployee" />
+          <FunctionImport Name="S_AddEmployee_p">
+            <Parameter Name="Eid" Mode="In" Type="Int32" />
+            <Parameter Name="Ename" Mode="In" Type="String" />
+            <Parameter Name="Erole" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="proc_CheckLogin_Result">
           <Property Type="Int32" Name="EmployeeId" Nullable="false" />
           <Property Type="String" Name="EmployeeRole" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="Project1">
+          <Key>
+            <PropertyRef Name="ProId" />
+          </Key>
+          <Property Name="ProId" Type="Int32" Nullable="false" />
+          <Property Name="ProName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProjectLists" Relationship="releasedbModel.FK__ProjectList__Pid__4E88ABD4" FromRole="Project1" ToRole="ProjectList" />
+        </EntityType>
+        <EntityType Name="ProjectList">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pid" Type="Int32" />
+          <Property Name="Pname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProjManagerId" Type="Int32" />
+          <NavigationProperty Name="EmployeeList" Relationship="releasedbModel.FK__ProjectLi__ProjM__4F7CD00D" FromRole="ProjectList" ToRole="EmployeeList" />
+          <NavigationProperty Name="Project" Relationship="releasedbModel.FK__ProjectList__Pid__4E88ABD4" FromRole="ProjectList" ToRole="Project1" />
+        </EntityType>
+        <Association Name="FK__ProjectLi__ProjM__4F7CD00D">
+          <End Type="releasedbModel.EmployeeList" Role="EmployeeList" Multiplicity="0..1" />
+          <End Type="releasedbModel.ProjectList" Role="ProjectList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeList">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="ProjectList">
+              <PropertyRef Name="ProjManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProjectList__Pid__4E88ABD4">
+          <End Type="releasedbModel.Project1" Role="Project1" Multiplicity="0..1" />
+          <End Type="releasedbModel.ProjectList" Role="ProjectList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project1">
+              <PropertyRef Name="ProId" />
+            </Principal>
+            <Dependent Role="ProjectList">
+              <PropertyRef Name="Pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AddEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmpRole" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="releasedbModelStoreContainer" CdmEntityContainer="releasedbEntities">
+        <EntityContainerMapping StorageEntityContainer="releasedbModelStoreContainer" CdmEntityContainer="releasedbEntities1">
           <EntitySetMapping Name="EmployeeLists">
             <EntityTypeMapping TypeName="releasedbModel.EmployeeList">
               <MappingFragment StoreEntitySet="EmployeeList">
@@ -266,18 +358,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Projects">
-            <EntityTypeMapping TypeName="releasedbModel.Project">
-              <MappingFragment StoreEntitySet="Projects">
-                <ScalarProperty Name="Pid" ColumnName="Pid" />
-                <ScalarProperty Name="Pname" ColumnName="Pname" />
-                <ScalarProperty Name="ProjManagerId" ColumnName="ProjManagerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="releasedbModel.Team">
               <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="LeadName" ColumnName="LeadName" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="TeamLeadId" ColumnName="TeamLeadId" />
               </MappingFragment>
@@ -292,6 +376,35 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="S_InsertIntoProject_p" FunctionName="releasedbModel.Store.S_InsertIntoProject_p" />
+          <EntitySetMapping Name="Project1">
+            <EntityTypeMapping TypeName="releasedbModel.Project1">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="S_AddTeamLeadtoProject_p" FunctionName="releasedbModel.Store.S_AddTeamLeadtoProject_p" />
+          <EntitySetMapping Name="ProjectLists">
+            <EntityTypeMapping TypeName="releasedbModel.ProjectList">
+              <MappingFragment StoreEntitySet="ProjectList">
+                <ScalarProperty Name="ProjManagerId" ColumnName="ProjManagerId" />
+                <ScalarProperty Name="Pname" ColumnName="Pname" />
+                <ScalarProperty Name="Pid" ColumnName="Pid" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AddEmployees">
+            <EntityTypeMapping TypeName="releasedbModel.AddEmployee">
+              <MappingFragment StoreEntitySet="AddEmployee">
+                <ScalarProperty Name="EmpRole" ColumnName="EmpRole" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="S_AddEmployee_p" FunctionName="releasedbModel.Store.S_AddEmployee_p" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
