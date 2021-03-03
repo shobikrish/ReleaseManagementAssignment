@@ -17,6 +17,8 @@
             <Items>
                 <asp:MenuItem NavigateUrl="~/AddProject.aspx" Text="Add Project" Value="Add Project"></asp:MenuItem>
                 <asp:MenuItem NavigateUrl="~/AssignProjectTeamLeads.aspx" Text="Assign Project to Team Leads" Value="Assign Project to Team Leads"></asp:MenuItem>
+                <asp:MenuItem NavigateUrl="~/ViewTeamLeads.aspx" Text="View TeamLeads" Value="View TeamLeads"></asp:MenuItem>
+                <asp:MenuItem NavigateUrl="~/ViewAllProjects.aspx" Text="View All Projects" Value="View All Projects"></asp:MenuItem>
             </Items>
         </asp:Menu>
     </form>

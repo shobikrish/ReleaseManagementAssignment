@@ -16,7 +16,7 @@ namespace ReleaseManagementAssignment
     {
         public int Pid { get; set; }
         public string Pname { get; set; }
-        public int ProjManagerId { get; set; }
+        public Nullable<int> ProjManagerId { get; set; }
     
         public virtual EmployeeList EmployeeList { get; set; }
     }

@@ -17,9 +17,9 @@ namespace ReleaseManagementAssignment
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EmployeeList()
         {
+            this.EmpTeams = new HashSet<EmpTeam>();
             this.Projects = new HashSet<Project>();
             this.Teams = new HashSet<Team>();
-            this.EmpTeams = new HashSet<EmpTeam>();
         }
     
         public int EmployeeId { get; set; }
@@ -28,10 +28,10 @@ namespace ReleaseManagementAssignment
         public string Paassword { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmpTeam> EmpTeams { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Projects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Teams { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmpTeam> EmpTeams { get; set; }
     }
 }

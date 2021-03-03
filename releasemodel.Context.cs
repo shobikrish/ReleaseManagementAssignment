@@ -15,10 +15,10 @@ namespace ReleaseManagementAssignment
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class releasedbEntities1 : DbContext
+    public partial class releasedbEntities : DbContext
     {
-        public releasedbEntities1()
-            : base("name=releasedbEntities1")
+        public releasedbEntities()
+            : base("name=releasedbEntities")
         {
         }
     
@@ -28,9 +28,9 @@ namespace ReleaseManagementAssignment
         }
     
         public virtual DbSet<EmployeeList> EmployeeLists { get; set; }
+        public virtual DbSet<EmpTeam> EmpTeams { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
-        public virtual DbSet<EmpTeam> EmpTeams { get; set; }
     
         public virtual ObjectResult<proc_CheckLogin_Result> proc_CheckLogin(Nullable<int> un, string pass)
         {
@@ -43,6 +43,19 @@ namespace ReleaseManagementAssignment
                 new ObjectParameter("pass", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<proc_CheckLogin_Result>("proc_CheckLogin", unParameter, passParameter);
+        }
+    
+        public virtual int S_InsertIntoProject_p(Nullable<int> pid, string pname)
+        {
+            var pidParameter = pid.HasValue ?
+                new ObjectParameter("Pid", pid) :
+                new ObjectParameter("Pid", typeof(int));
+    
+            var pnameParameter = pname != null ?
+                new ObjectParameter("Pname", pname) :
+                new ObjectParameter("Pname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("S_InsertIntoProject_p", pidParameter, pnameParameter);
         }
     }
 }

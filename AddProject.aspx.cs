@@ -13,5 +13,27 @@ namespace ReleaseManagementAssignment
         {
 
         }
+
+        protected void AddButton_Click(object sender, EventArgs e)
+        {
+            int projid;
+            while (!(Int32.TryParse(ProIDBox.Text, out projid)))
+                Console.WriteLine("yui");
+
+            string projname = ProjNameBox.Text;
+            using(releasedbEntities db =new releasedbEntities())
+            {
+                db.S_InsertIntoProject_p(projid, projname);
+                db.SaveChanges();
+                ProjNameBox.Text = "";
+                ProIDBox.Text = "";
+
+            }
+
+        }
+
+        protected void ProIDBox_TextChanged(object sender, EventArgs e)
+        {
+        }
     }
 }

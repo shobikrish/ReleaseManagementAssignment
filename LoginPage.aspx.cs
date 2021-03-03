@@ -17,7 +17,7 @@ namespace ReleaseManagementAssignment
         protected void ButtonLogin_Click(object sender, EventArgs e)
         {
             List<proc_CheckLogin_Result> user = null;
-            releasedbEntities1 releasedbEntities = new releasedbEntities1();
+            releasedbEntities releasedbEntities = new releasedbEntities();
             int Empid = int.Parse(UsrTxtbox.Text);
             string password = Usrpwd.Text;
             user = releasedbEntities.proc_CheckLogin(Empid, password).ToList();
