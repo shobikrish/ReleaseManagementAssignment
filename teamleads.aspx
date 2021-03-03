@@ -1,7 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manager.Master" AutoEventWireup="true" CodeBehind="AssignProjectTeamLeads.aspx.cs" Inherits="ReleaseManagementAssignment.AssignProjectTeamLeads" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manager.Master" AutoEventWireup="true" CodeBehind="teamleads.aspx.cs" Inherits="ReleaseManagementAssignment.teamleads" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
     <style>
         @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
@@ -16,7 +15,7 @@
             align-items: center;
             flex-direction: column;
             font-family: "Montserrat", sans-serif;
-            height: 100vh;
+            height: 94vh;
             margin: -20px 0 50px;
         }
 
@@ -83,7 +82,7 @@
             position: relative;
             overflow: hidden;
             width: 768px;
-            height: 30%;
+            height: 60%;
         }
 
         .form-container {
@@ -159,68 +158,89 @@
             border-radius: 4px;
             background-color: #9e9998;
         }
+
+        .Grid {
+            background-color: #fff;
+            margin: 5px 0 10px 0;
+            border: solid 1px #525252;
+            border-collapse: collapse;
+            font-family: Calibri;
+            margin: 0 auto;
+            color: rgba(191, 23, 88, 0.96);
+        }
+
+            .Grid td {
+                padding: 2px;
+                border: solid 1px #c1c1c1;
+            }
+
+            .Grid th {
+                padding: 4px 2px;
+                color: #fff;
+                background: #363670 url(Images/grid-header.png) repeat-x top;
+                border-left: solid 1px #525252;
+                font-size: 0.9em;
+            }
+
+            .Grid .alt {
+                background: #fcfcfc url(Images/grid-alt.png) repeat-x top;
+            }
+
+            .Grid .pgr {
+                background: #363670 url(Images/grid-pgr.png) repeat-x top;
+            }
+
+                .Grid .pgr table {
+                    margin: 3px 0;
+                }
+
+                .Grid .pgr td {
+                    border-width: 0;
+                    padding: 0 6px;
+                    border-left: solid 1px #666;
+                    font-weight: bold;
+                    color: #fff;
+                    line-height: 12px;
+                }
+
+                .Grid .pgr a {
+                    color: Gray;
+                    text-decoration: none;
+                }
+
+                    .Grid .pgr a:hover {
+                        color: #000;
+                        text-decoration: none;
+                    }
     </style>
 </asp:Content>
-
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="container" id="container">
+        <br />
+        <br />
+        <br />
         <div class="form-container log-in-container">
         </div>
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
-                    <h1>Assign Projects to TeamLeads</h1>
+                    <h1>Team Leader Details</h1>
                 </div>
             </div>
         </div>
     </div>
-    <div style="text-align:center">
-        <table style=" margin: 0 auto"><br /><br /><br />
-            <tr>
-                <td>
-                    <asp:Label ID="pl" runat="server" Text="Project Id"></asp:Label>
-                </td>
-                <td>
-                    <asp:DropDownList CssClass="drop" ID="DropDownList3" runat="server" DataSourceID="SqlDataSource3" DataTextField="ProId" DataValueField="ProId">
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:releasedbConnectionString4 %>" SelectCommand="SELECT [ProId] FROM [Project]"></asp:SqlDataSource>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label ID="Label2" runat="server" Text="Project Name:"></asp:Label>
-                </td>
-                <td>
-                    <asp:DropDownList CssClass="drop" ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="ProName" DataValueField="ProName" Width="195px" Height="58px">
-                    </asp:DropDownList>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label ID="Label3" runat="server" Text="Team Lead ID:"></asp:Label>
-                </td>
-                <td>
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:releasedbConnectionString2 %>" SelectCommand="SELECT [ProId], [ProName] FROM [Project]"></asp:SqlDataSource>
-                    <asp:DropDownList CssClass="drop" ID="DropDownList2" runat="server" DataSourceID="SqlDataSource2" DataTextField="TeamLeadId" DataValueField="TeamLeadId" Width="161px">
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:releasedbConnectionString %>" SelectCommand="SELECT DISTINCT [EmpId] as TeamLeadId FROM [AddEmployee] WHERE ([EmpRole] = 'Team Lead')"></asp:SqlDataSource>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-
-
-
-        </table>
-    </div>
-
-    <asp:Button CssClass="drop" ID="AssignButton" runat="server" Text="Submit" OnClick="AssignButton_Click" />
     <br />
-    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-</asp:Content>
+    <br />
+    <br />
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" CssClass="Grid" AlternatingRowStyle-CssClass="alt" PagerStyle-CssClass="pgr" DataKeyNames="TeamLeadID">
+        <AlternatingRowStyle CssClass="alt"></AlternatingRowStyle>
+        <Columns>
+            <asp:BoundField DataField="TeamLeadID" HeaderText="TeamLeadID" SortExpression="TeamLeadID" ReadOnly="True" />
+            <asp:BoundField DataField="TeamLeadName" HeaderText="TeamLeadName" SortExpression="TeamLeadName" />
+        </Columns>
 
+        <PagerStyle CssClass="pgr"></PagerStyle>
+    </asp:GridView>
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:releasedbConnectionString %>" SelectCommand="SELECT [EmpId] as TeamLeadID, [EmpName] as TeamLeadName FROM [AddEmployee] WHERE ([EmpRole] = 'Team Lead')"></asp:SqlDataSource>
+</asp:Content>

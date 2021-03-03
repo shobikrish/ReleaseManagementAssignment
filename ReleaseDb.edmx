@@ -54,7 +54,7 @@
           <Property Name="TeamLeadId" Type="int" Nullable="false" />
           <Property Name="LeadName" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__ProjectLi__ProjM__4F7CD00D">
+        <Association Name="FK__ProjectLi__ProjM__300424B4">
           <End Role="EmployeeList" Type="Self.EmployeeList" Multiplicity="0..1" />
           <End Role="ProjectList" Type="Self.ProjectList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -66,7 +66,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProjectList__Pid__4E88ABD4">
+        <Association Name="FK__ProjectList__Pid__30F848ED">
           <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="ProjectList" Type="Self.ProjectList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -139,11 +139,11 @@
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectList" EntityType="Self.ProjectList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__ProjectLi__ProjM__4F7CD00D" Association="Self.FK__ProjectLi__ProjM__4F7CD00D">
+          <AssociationSet Name="FK__ProjectLi__ProjM__300424B4" Association="Self.FK__ProjectLi__ProjM__300424B4">
             <End Role="EmployeeList" EntitySet="EmployeeList" />
             <End Role="ProjectList" EntitySet="ProjectList" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProjectList__Pid__4E88ABD4" Association="Self.FK__ProjectList__Pid__4E88ABD4">
+          <AssociationSet Name="FK__ProjectList__Pid__30F848ED" Association="Self.FK__ProjectList__Pid__30F848ED">
             <End Role="Project" EntitySet="Project" />
             <End Role="ProjectList" EntitySet="ProjectList" />
           </AssociationSet>

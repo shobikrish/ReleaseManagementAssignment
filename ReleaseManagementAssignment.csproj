@@ -91,8 +91,8 @@
       <DependentUpon>ReleaseDb.edmx</DependentUpon>
       <LastGenOutput>ReleaseDb.cs</LastGenOutput>
     </Content>
+    <Content Include="teamleads.aspx" />
     <Content Include="ViewAllProjects.aspx" />
-    <Content Include="ViewTeamLeads.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -178,19 +178,19 @@
     <Compile Include="Team.cs">
       <DependentUpon>ReleaseDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="teamleads.aspx.cs">
+      <DependentUpon>teamleads.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="teamleads.aspx.designer.cs">
+      <DependentUpon>teamleads.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewAllProjects.aspx.cs">
       <DependentUpon>ViewAllProjects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewAllProjects.aspx.designer.cs">
       <DependentUpon>ViewAllProjects.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ViewTeamLeads.aspx.cs">
-      <DependentUpon>ViewTeamLeads.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ViewTeamLeads.aspx.designer.cs">
-      <DependentUpon>ViewTeamLeads.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -11,22 +11,26 @@ namespace ReleaseManagementAssignment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
+           
         }
 
         protected void ButtonLogin_Click(object sender, EventArgs e)
         {
             List<proc_CheckLogin_Result> user = null;
-            releasedbEntities1 releasedbEntities = new releasedbEntities1();
             int Empid = int.Parse(UsrTxtbox.Text);
             string password = Usrpwd.Text;
-            user = releasedbEntities.proc_CheckLogin(Empid, password).ToList();
-            string EmpRole = user[0].EmployeeRole;
-            if (EmpRole=="Manager")
+            using (releasedbEntities1 dbcontext =new releasedbEntities1())
             {
-                Session.Add("Empid", UsrTxtbox.Text);
-                Response.Redirect("ManagerRole.aspx");
+                user=dbcontext.proc_CheckLogin(Empid, password).ToList();
+                string EmpRole = user[0].EmployeeRole;
+                if (EmpRole == "Manager")
+                {
+                    Session.Add("Empid", UsrTxtbox.Text);
+                    Response.Redirect("ManagerRole.aspx");
+                }
             }
+            
         }
     }
 }
