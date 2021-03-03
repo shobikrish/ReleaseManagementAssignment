@@ -13,5 +13,18 @@ namespace ReleaseManagementAssignment
         {
 
         }
+
+        protected void AssignButton_Click(object sender, EventArgs e)
+        {
+            int ProjectId = Convert.ToInt32(DropDownList3.SelectedValue);
+            string ProjName = DropDownList1.SelectedValue;
+            int Tid = Convert.ToInt32(DropDownList2.SelectedValue);
+            using (releasedbEntities1 db = new releasedbEntities1())
+            {
+                db.S_AddTeamLeadtoProject_p(ProjectId, ProjName, Tid);
+                db.SaveChanges();
+                Label1.Text = "Team Lead ID is added";
+            }
+        }
     }
 }

@@ -15,10 +15,10 @@ namespace ReleaseManagementAssignment
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class releasedbEntities : DbContext
+    public partial class releasedbEntities1 : DbContext
     {
-        public releasedbEntities()
-            : base("name=releasedbEntities")
+        public releasedbEntities1()
+            : base("name=releasedbEntities1")
         {
         }
     
@@ -29,8 +29,10 @@ namespace ReleaseManagementAssignment
     
         public virtual DbSet<EmployeeList> EmployeeLists { get; set; }
         public virtual DbSet<EmpTeam> EmpTeams { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<Project1> Project1 { get; set; }
+        public virtual DbSet<ProjectList> ProjectLists { get; set; }
+        public virtual DbSet<AddEmployee> AddEmployees { get; set; }
     
         public virtual ObjectResult<proc_CheckLogin_Result> proc_CheckLogin(Nullable<int> un, string pass)
         {
@@ -56,6 +58,40 @@ namespace ReleaseManagementAssignment
                 new ObjectParameter("Pname", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("S_InsertIntoProject_p", pidParameter, pnameParameter);
+        }
+    
+        public virtual int S_AddTeamLeadtoProject_p(Nullable<int> pid, string pname, Nullable<int> leadid)
+        {
+            var pidParameter = pid.HasValue ?
+                new ObjectParameter("Pid", pid) :
+                new ObjectParameter("Pid", typeof(int));
+    
+            var pnameParameter = pname != null ?
+                new ObjectParameter("Pname", pname) :
+                new ObjectParameter("Pname", typeof(string));
+    
+            var leadidParameter = leadid.HasValue ?
+                new ObjectParameter("leadid", leadid) :
+                new ObjectParameter("leadid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("S_AddTeamLeadtoProject_p", pidParameter, pnameParameter, leadidParameter);
+        }
+    
+        public virtual int S_AddEmployee_p(Nullable<int> eid, string ename, string erole)
+        {
+            var eidParameter = eid.HasValue ?
+                new ObjectParameter("Eid", eid) :
+                new ObjectParameter("Eid", typeof(int));
+    
+            var enameParameter = ename != null ?
+                new ObjectParameter("Ename", ename) :
+                new ObjectParameter("Ename", typeof(string));
+    
+            var eroleParameter = erole != null ?
+                new ObjectParameter("Erole", erole) :
+                new ObjectParameter("Erole", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("S_AddEmployee_p", eidParameter, enameParameter, eroleParameter);
         }
     }
 }
